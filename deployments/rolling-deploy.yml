@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rolling-deploy
+  labels:
+    app: rolling-deploy
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 3
+  selector:
+    matchLabels:
+      app: rolling-deploy
+  template:
+    metadata:
+      labels:
+        app: rolling-deploy
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["sh", "-c", "while true; do echo version6; sleep 10; done"]

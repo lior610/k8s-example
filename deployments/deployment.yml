@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-project
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx-project
+  template:
+    metadata:
+      labels:
+        app: nginx-project
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.17.3
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 250m
+              memory: 10Mi
+            limits:
+              cpu: 500m
+              memory: 20Mi
+      # nodeSelector:
+      #   disk: hdd

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: configmap-envfrom
+spec:
+  containers:
+    - name: app
+      image: busybox
+      command: ["sh", "-c", "while true; do env && sleep 10; done"]
+      envFrom:
+        - configMapRef:
+            name: my-config

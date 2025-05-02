@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-world
+  namespace: default
+  annotations:
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "demo.pf9.io"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: hello-world
+            port:
+              number: 8080
+  - host: "fruits.lior"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/apple"
+        backend:
+          service:
+            name: apple-service
+            port:
+              number: 5678
+      - pathType: Prefix
+        path: "/banana"
+        backend:
+          service:
+            name: banana-service
+            port:
+              number: 5678

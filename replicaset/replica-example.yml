@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: simple-backend-rs
+  labels:
+    app: simple-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: simple-backend
+  template:
+    metadata:
+      labels:
+        app: simple-backend
+    spec:
+      containers:
+        - name: simple-backend
+          image: busybox
+          command: ["sh", "-c", "while true; do echo Hello from backend; sleep 10; done"]
