@@ -1,0 +1,2 @@
+Installed {{ .Values.image.repository }}:{{ .Values.image.tag }} successfully.
+Service is {{ .Values.service.type }} listening on port {{ .Values.service.port }}

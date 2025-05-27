@@ -1,0 +1,12 @@
+replicaCount: 2
+
+image:
+  repository: nginx
+  tag: "1.21"
+
+service:
+  type: ClusterIP
+  port: 80
+
+config:
+  WELCOME_MESSAGE: "Hello from Helm!"

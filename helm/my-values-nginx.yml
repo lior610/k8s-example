@@ -1,0 +1,6 @@
+replicaCount: 4
+
+service:
+  type: NodePort
+  nodePorts:
+    http: 30280
