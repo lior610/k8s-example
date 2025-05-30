@@ -3,4 +3,6 @@ kind: ConfigMap
 metadata:
   name: {{ include "test-chart.fullname" . }}
 data:
-  WELCOME_MESSAGE: "{{ .Values.config.WELCOME_MESSAGE }}"
+{{- range .Values.config.ENV_VARS }}
+  {{ .name }}: {{ .value | quote }}
+{{- end }}

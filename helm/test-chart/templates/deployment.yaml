@@ -3,9 +3,12 @@ kind: Deployment
 metadata:
   name: {{ include "test-chart.fullname" . }}
   labels:
-    app: {{ include "test-chart.fullname" . }}
+    {{- include "test-chart.labels" . | nindent 4 }}
+    {{- range $key, $val := .Values.extraLabels }}
+    {{ $key }}: "{{ $val }}"
+    {{- end }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ default 2 .Values.replicaCount }}
   selector:
     matchLabels:
       app: {{ include "test-chart.fullname" . }}
@@ -16,12 +19,19 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: '{{ required "Image repository is required!" .Values.image.repository }}:{{ default "latest" .Values.image.tag }}'
           ports:
             - containerPort: {{ .Values.service.port }}
           env:
-            - name: WELCOME_MESSAGE
+          {{- range .Values.config.ENV_VARS }}
+            - name: {{ .name }}
               valueFrom:
                 configMapKeyRef:
-                  name: {{ include "test-chart.fullname" . }}
-                  key: WELCOME_MESSAGE
+                  name: {{ include "test-chart.fullname" $ }}
+                  key: {{ .name }}
+          {{- end }}
+      {{- if .Values.enableSidecar }}
+        - name: {{ .Values.sidecar.name }}
+          image: {{ .Values.sidecar.image }}
+          command: {{ .Values.sidecar.command }}
+      {{- end }}

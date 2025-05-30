@@ -4,9 +4,26 @@ image:
   repository: nginx
   tag: "1.21"
 
+enableSidecar: false
+
+sidecar:
+  name: log-agent
+  image: busybox
+  command: ["/bin/sh", "-c", "echo Hello"]
+
 service:
+  enabled: true
   type: ClusterIP
   port: 80
 
 config:
-  WELCOME_MESSAGE: "Hello from Helm!"
+  ENV_VARS:
+    - name: "WELCOME_MESSAGE"
+      value: "Hello from Helm!"
+    - name: "ENV"
+      value: "production"
+
+extraLabels:
+  team: devops
+  owner: alice
+  feature: "v2"

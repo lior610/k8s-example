@@ -1,11 +1,15 @@
+{{- if and .Values.service.enabled (ne .Values.service.type "LoadBalancer") }}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "test-chart.fullname" . }}
+  labels:
+    {{- include "test-chart.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ default "ClusterIP" .Values.service.type }}
   selector:
     app: {{ include "test-chart.fullname" . }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
+{{- end }}
