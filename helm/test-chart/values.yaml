@@ -27,3 +27,21 @@ extraLabels:
   team: devops
   owner: alice
   feature: "v2"
+
+
+global:
+  appName: demo-app
+  imageTag: "1.21"
+
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: false
+
+my-subchart:
+  enabled: true
+  service:
+    port: 8080
+  image:
+    repository: nginx

@@ -4,3 +4,14 @@ description: A simple Helm chart example
 type: application
 version: 0.1.0
 appVersion: "1.16.0"
+
+dependencies:
+  - name: redis
+    version: 17.9.3
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+
+  - name: my-subchart
+    version: 0.1.0
+    repository: "file://charts/my-subchart"
+    condition: my-subchart.enabled

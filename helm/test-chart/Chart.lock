@@ -1,0 +1,9 @@
+dependencies:
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 17.9.3
+- name: my-subchart
+  repository: file://charts/my-subchart
+  version: 0.1.0
+digest: sha256:90b1eb3f33b92e5a53f226764f5f8b37a05b16e76f0de2acfabd64160fb011a5
+generated: "2025-05-30T13:00:26.106064325+03:00"
